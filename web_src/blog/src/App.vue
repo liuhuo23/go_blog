@@ -1,9 +1,17 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="common-layout">
+    <el-container>
+      <el-header>
+        <el-row>
+          <el-col :span="5"></el-col>
+        </el-row>
+      </el-header>
+      <el-main>
+        <router-view/>
+      </el-main>
+      <el-footer></el-footer>
+    </el-container>
   </div>
-  <router-view/>
 </template>
 
 <style lang="stylus">
