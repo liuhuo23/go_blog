@@ -1,6 +1,4 @@
-# go_blog
-个人博客网站搭建
-
+.
 ├── README.md
 ├── go_src
 │   ├── go.mod
@@ -22,3 +20,5 @@
         │   ├── router
         │   └── views
         └── yarn.lock
+
+834 directories, 12 files
