@@ -16,3 +16,4 @@
 ./web_src/blog/node_modules
 ./vscode
 ./built
+./web_src/vue3_blog/node_modules
