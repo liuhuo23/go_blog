@@ -1,5 +1,6 @@
 # go_blog
 个人博客网站搭建
+```
 
 ├── README.md
 ├── go_src
@@ -22,3 +23,4 @@
         │   ├── router
         │   └── views
         └── yarn.lock
+```

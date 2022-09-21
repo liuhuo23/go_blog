@@ -12,7 +12,7 @@ module.exports ={
     outDir: 'dist', 
     proxy: {
         '/api': {
-            target: 'http://localhost:80080', //后端服务实际地址
+            target: 'http://localhost:8080', //后端服务实际地址
             changeOrigin: true,
             rewrite: path => path.replace(/^\/api/, '')
         }
