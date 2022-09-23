@@ -2,8 +2,7 @@ package data
 
 import (
 	c "go_blog/config"
-	"log"
-
+	log "go_blog/internal/pkg/logger"
 	"gorm.io/gorm"
 )
 
