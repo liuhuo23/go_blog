@@ -24,7 +24,7 @@ func InitLogger() {
 // initZapLog 初始化日志
 func createZapLog() *zap.Logger {
 	// 开启Debug
-	if config.Config.Config.Debug == true {
+	if config.Config.AppConfig.Debug == true {
 		if Logger, err := zap.NewDevelopment(); err == nil {
 			return Logger
 		} else {
@@ -39,7 +39,7 @@ func createZapLog() *zap.Logger {
 	//在日志文件种使用大写字母记录日志级别
 	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
 	encoder := zapcore.NewConsoleEncoder(encoderConfig)
-	filename := filepath.Join(config.Config.Config.StaticBasePath, "/logs/", config.Config.Logger.Filename)
+	filename := filepath.Join(config.Config.AppConfig.StaticBasePath, "/logs/", config.Config.Logger.Filename)
 	var writer zapcore.WriteSyncer
 	if config.Config.Logger.DefaultDivision == "size" {
 		// 按文件大小切割日志

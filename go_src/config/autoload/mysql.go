@@ -15,7 +15,7 @@ type MySqlConfig struct {
 	MaxOpenConns int           `ini:"max_open_conns" yaml:"max_open_conns"`
 	MaxLifetime  time.Duration `ini:"max_lifetime" yaml:"max_lifetime"`
 	LogLevel     int           `ini:"log_level" yaml:"log_level"`
-	PrintSql     bool          `ini:"print_sql" yaml:"log_level"`
+	PrintSql     bool          `ini:"print_sql" yaml:"print-sql"`
 }
 
 var Mysql = MySqlConfig{

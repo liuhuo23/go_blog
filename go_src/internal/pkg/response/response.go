@@ -99,7 +99,7 @@ func (r *Response) SetMessage(message string) *Response {
 	return r
 }
 
-var ErrorText = errors.NewErrorText(config.Config.Config.Language)
+var ErrorText = errors.NewErrorText(config.Config.AppConfig.Language)
 
 // json 返回 gin 框架的 HandlerFunc
 func (r *Response) json(c *gin.Context) {

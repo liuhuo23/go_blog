@@ -3,42 +3,67 @@ package config
 import (
 	. "go_blog/config/autoload"
 	"go_blog/pkg/utils"
+	"gopkg.in/ini.v1"
+	"gopkg.in/yaml.v3"
 	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sync"
-
-	"gopkg.in/ini.v1"
-	"gopkg.in/yaml.v2"
 )
 
 // Conf 配置项主结构体
 type Conf struct {
-	Config AppConfig    `ini:"app" yaml:"app"`
-	Server ServerConfig `ini:"server" yaml:"server"`
-	Mysql  MySqlConfig  `ini:"mysql" yaml:"mysql"`
-	Redis  RedisConfig  `ini:"redis" yaml:"redis"`
-	Logger LoggerConfig `ini:"logger" yaml:"logger"`
+	AppConfig `ini:"app" yaml:"app"`
+	Server    ServerConfig `ini:"server" yaml:"server"`
+	Mysql     MySqlConfig  `ini:"mysql" yaml:"mysql"`
+	Redis     RedisConfig  `ini:"redis" yaml:"redis"`
+	Logger    LoggerConfig `ini:"logger" yaml:"logger"`
 }
 
 var Config = &Conf{
-	Config: App,
-	Server: Server,
-	Mysql:  Mysql,
-	Redis:  Redis,
-	Logger: Logger,
+	AppConfig: App,
+	Server:    Server,
+	Mysql:     Mysql,
+	Redis:     Redis,
+	Logger:    Logger,
 }
 
 var once sync.Once
 
 func InitConfig(configPath string) {
 	once.Do(func() {
+		// 加载 .yaml 配置
 		loadYaml(configPath)
-		loadIni(configPath)
+
+		// 加载 .ini 配置
+		// loadIni(configPath)
 	})
 }
 
+func loadYaml(configPath string) {
+	var yamlConfig string
+	if configPath == "" {
+		runDirectory, _ := utils.GetCurrentPath()
+		// 生成 config.yaml 文件
+		yamlConfig = filepath.Join(runDirectory, "/config.yaml")
+		yamlExampleConfig := filepath.Join(runDirectory, "/config.yaml.example")
+		copyConf(yamlExampleConfig, yamlConfig)
+	} else {
+		yamlConfig = configPath
+	}
+
+	cfg, err := ioutil.ReadFile(yamlConfig)
+	if err != nil {
+		panic("Failed to read configuration file:" + err.Error())
+	}
+	err = yaml.Unmarshal(cfg, &Config)
+	if err != nil {
+		panic("Failed to load configuration:" + err.Error())
+	}
+}
+
+// load 加载配置项
 func loadIni(configPath string) {
 	var iniConfig string
 	if configPath == "" {
@@ -60,52 +85,35 @@ func loadIni(configPath string) {
 	}
 }
 
-func loadYaml(configPath string) {
-	var yamlConfig string
-	if configPath == "" {
-		runDirectory, _ := utils.GetCurrentPath()
-		yamlConfig = filepath.Join(runDirectory, "/config.yaml")
-		yamlExampleConfig := filepath.Join(runDirectory, "/config.yaml.example")
-		copyConf(yamlExampleConfig, yamlConfig)
-	} else {
-		yamlConfig = configPath
-	}
-	cfg, err := ioutil.ReadFile(yamlConfig)
-	if err != nil {
-		panic("读取配置文件错误，请检查！")
-	}
-	err = yaml.Unmarshal(cfg, &Config)
-	if err != nil {
-		panic("读取配置文件失败:" + err.Error())
-	}
-}
-
+// copyConf 复制配置示例文件
 func copyConf(exampleConfig, config string) {
 	fileInfo, err := os.Stat(config)
-	if err != nil {
+
+	if err == nil {
+		// config.ini 路径存在， 判断 config.ini 文件是否目录，不是目录则代表文件存在直接 return
 		if !fileInfo.IsDir() {
 			return
 		}
 		panic("配置文件目录存在同名的文件夹，无法创建配置文件")
 	}
-	//打开文件失败。并且返回的错误不是文件未找到
+
+	// 打开文件失败，并且返回的错误不是文件未找到
 	if !os.IsNotExist(err) {
-		panic("初始化失败：" + err.Error())
+		panic("初始化失败: " + err.Error())
 	}
 
-	//自动复制一份 config.ini
+	// 自动复制一份config.ini
 	source, err := os.Open(exampleConfig)
 	if err != nil {
-		panic("创建配置文件失败，配置示例文件不存在：" + err.Error())
+		panic("创建配置文件失败，配置示例文件不存在: " + err.Error())
 	}
 	defer func(source *os.File) {
 		err := source.Close()
 		if err != nil {
-			panic("关闭示例资源失败：" + err.Error())
+			panic("关闭示例资源失败: " + err.Error())
 		}
 	}(source)
 
-	//创建空文件
 	// 创建空文件
 	dst, err := os.Create(config)
 	if err != nil {

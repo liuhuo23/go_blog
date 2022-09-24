@@ -44,7 +44,7 @@ func NewBusinessError(code int, message ...string) *BusinessError {
 	if message != nil {
 		msg = message[0]
 	} else {
-		msg = NewErrorText(c.Config.Config.Language).Text(code)
+		msg = NewErrorText(c.Config.AppConfig.Language).Text(code)
 	}
 	err := new(BusinessError)
 	err.SetCode(code)
