@@ -1,8 +1,8 @@
-import httpRequest from '@/request/index'
+import httpRequest from '../request/index'
 
 export function apiGetuserInfo(userid, username){
     return httpRequest({
-        url: '',
+        url: '/noapi/ping',
         method: 'post',
         data:{
             username: username,

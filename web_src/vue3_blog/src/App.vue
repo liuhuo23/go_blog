@@ -1,13 +1,19 @@
+<template>
+  <el-container>
+    <el-header class="header" height="40px">
+      <Nav />
+    </el-header>
+    <el-main>
+      <router-view />
+    </el-main>
+  </el-container>
+</template>
 <script setup>
+import Nav from './components/Nav.vue'
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import HelloWorld from './components/HelloWorld.vue'
 </script>
-
-<template>
-  <router-link  to="/">HOME</router-link>
-  <router-view></router-view>
-</template>
 
 <style scoped>
 .logo {
@@ -20,5 +26,8 @@ import HelloWorld from './components/HelloWorld.vue'
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
+}
+.header{
+  border-bottom: 1px solid #888888;
 }
 </style>

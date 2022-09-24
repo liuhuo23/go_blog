@@ -10,4 +10,5 @@ var zhCNText = map[int]string{
 	UserDoesNotExist:   "用户不存在",
 	AuthorizationError: "权限错误",
 	RBACError:          "暂无访问权限",
+	UserISExist:        "用户已经存在",
 }
