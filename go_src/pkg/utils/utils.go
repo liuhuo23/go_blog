@@ -1,6 +1,10 @@
 package utils
 
 import (
+	"bytes"
+	"crypto/cipher"
+	"crypto/des"
+	"encoding/base64"
 	"errors"
 	"os"
 	"path"
@@ -87,4 +91,56 @@ func GetDefaultPath() (dir string, err error) {
 		return GetRunPath(), nil
 	}
 	return dir, nil
+}
+
+// 加密
+func MyEncrypt(data, key []byte, iv []byte) ([]byte, error) {
+	/*
+		key必须是8位，否则报错
+		if len(key) != 8 {
+			return nil, KeySizeError(len(key))
+		}
+	*/
+	block, err := des.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+	bs := block.BlockSize()
+	data = PKCS5Padding(data, bs) //填充字符
+	blockMode := cipher.NewCBCEncrypter(block, iv)
+	out := make([]byte, len(data))
+	blockMode.CryptBlocks(out, data)
+	return out, nil
+}
+
+func PKCS5Padding(ciphertext []byte, blockSize int) []byte {
+	padding := blockSize - len(ciphertext)%blockSize
+	padText := bytes.Repeat([]byte{byte(padding)}, padding)
+	return append(ciphertext, padText...)
+}
+
+func base64Encode(src []byte) []byte {
+	return []byte(base64.StdEncoding.EncodeToString(src))
+}
+
+func MyDecrypt(data []byte, key []byte, iv []byte) ([]byte, error) {
+	block, err := des.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+	blockMode := cipher.NewCBCDecrypter(block, iv)
+	out := make([]byte, len(data))
+	blockMode.CryptBlocks(out, data)
+	out = PKCS5UnPadding(out)
+	return out, nil
+}
+
+func PKCS5UnPadding(origData []byte) []byte {
+	length := len(origData)
+	unPadding := int(origData[length-1])
+	return origData[:(length - unPadding)]
+}
+
+func base64Decode(src []byte) ([]byte, error) {
+	return base64.StdEncoding.DecodeString(string(src))
 }

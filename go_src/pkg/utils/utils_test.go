@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"fmt"
+	"log"
 	"testing"
 )
 
@@ -46,4 +48,26 @@ func TestIf(t *testing.T) {
 	if 1 != If(true, 1, 3) {
 		t.Error("模拟三元操作失败")
 	}
+}
+
+func TestMyDecrypt(t *testing.T) {
+	key := []byte("12345678")
+	iv := []byte("12345678")
+	data := []byte("12345678")
+	out, err := MyEncrypt(data, key, iv)
+	if err != nil {
+		fmt.Println("err", err.Error())
+		t.Error(err.Error())
+	}
+
+	fmt.Println(out)
+	deByte := base64Encode(out)
+	fmt.Println("deByte:", deByte)
+	fmt.Println("hello")
+	fmt.Println("加密后：", string(deByte))
+
+	src := []byte("CyqS6B+0nOGkMmaqyup7gQ==")
+	enByte, _ := base64Decode(src)
+	out, _ = MyDecrypt(enByte, key, iv)
+	log.Println("解密后:", string(out)) //2022/01/17 15:44:23 解密后: hello world
 }
