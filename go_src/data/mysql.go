@@ -63,4 +63,5 @@ func initMysql() {
 	sqlDB.SetMaxOpenConns(c.Config.Mysql.MaxOpenConns)
 	// SetConnMaxLifetime 设置了连接可复用的最大时间。
 	sqlDB.SetConnMaxLifetime(c.Config.Mysql.MaxLifetime)
+	//自动检查 Product 结构是否变化，变化则进行迁移
 }

@@ -3,18 +3,22 @@ package service
 import (
 	"go_blog/internal/model"
 	err "go_blog/internal/pkg/errors"
+	log "go_blog/internal/pkg/logger"
 )
 
 type AuthService struct {
+}
+type Data struct {
+	Token string `json:"token"`
 }
 
 func NewAuthService() *AuthService {
 	return &AuthService{}
 }
 
-func (auth *AuthService) Login(username, password string) (*model.AdminUsers, error) {
+func (auth *AuthService) Login(username, password string) (*Data, error) {
 	// 查询用户是否存在
-	adminUsersModel := model.NewAdminUsers()
+	adminUsersModel, _ := model.NewAdminUsers()
 	user := adminUsersModel.GetUserInfo(username)
 
 	if user == nil {
@@ -29,6 +33,22 @@ func (auth *AuthService) Login(username, password string) (*model.AdminUsers, er
 
 	/* TODO 生成 token 等业务逻辑，此处不再演示，直接返回用户信息 */
 	// ...
-
-	return user, nil
+	data := Data{
+		Token: "hello",
+	}
+	return &data, nil
+}
+func (auth *AuthService) Register(username, password string) error {
+	adminUsers, berr := model.NewAdminUsers()
+	if berr != nil {
+		log.Logger.Sugar().Info(berr.Error())
+	}
+	adminUsers.Password = password
+	adminUsers.Username = username
+	berr = adminUsers.Register()
+	if berr != nil {
+		berr := err.NewBusinessError(err.UserISExist)
+		return berr
+	}
+	return nil
 }

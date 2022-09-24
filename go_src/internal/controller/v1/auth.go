@@ -35,3 +35,17 @@ func (api *AuthController) Login(c *gin.Context) {
 	}
 	api.Success(c, result)
 }
+
+func (api *AuthController) NewRegister(c *gin.Context) {
+	loginForm := form.LoginForm()
+
+	if err := validator.CheckPostParams(c, &loginForm); err != nil {
+		return
+	}
+	err := service.NewAuthService().Register(loginForm.UserName, loginForm.Password)
+	if err != nil {
+		api.Err(c, err)
+		return
+	}
+	api.Success(c, nil)
+}

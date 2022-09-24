@@ -24,8 +24,13 @@ type AdminUsers struct {
 	DeletedAt   soft_delete.DeletedAt `gorm:"column:deleted_at;type:int(11) unsigned;not null;default:0;index;uniqueIndex:a_u_username_unique;uniqueIndex:a_u_mobile_unique" json:"-"` // 删除时间戳
 }
 
-func NewAdminUsers() *AdminUsers {
-	return &AdminUsers{}
+func NewAdminUsers() (*AdminUsers, error) {
+	adminusers := AdminUsers{}
+	err := adminusers.CreateTable()
+	if err != nil {
+		return &adminusers, err
+	}
+	return &adminusers, nil
 }
 
 // GetUserById 根据uid获取用户信息
@@ -69,4 +74,12 @@ func (u *AdminUsers) GetUserInfo(username string) *AdminUsers {
 		return nil
 	}
 	return u
+}
+
+func (u *AdminUsers) CreateTable() error {
+	err := u.DB().AutoMigrate(u)
+	if err != nil {
+		return err
+	}
+	return nil
 }

@@ -10,4 +10,5 @@ var enUSText = map[int]string{
 	UserDoesNotExist:   "user does not exist",
 	AuthorizationError: "Authorization error",
 	RBACError:          "No access",
+	UserISExist:        "User is Exits",
 }

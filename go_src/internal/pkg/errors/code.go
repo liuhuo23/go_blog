@@ -10,9 +10,10 @@ const (
 	TooManyRequests    = 10102
 	AuthorizationError = 10103
 	RBACError          = 10104
+	UserISExist        = 10105
 )
 
-type ErrorText struct{
+type ErrorText struct {
 	Language string
 }
 
@@ -22,7 +23,7 @@ func NewErrorText(language string) *ErrorText {
 	}
 }
 
-func(et *ErrorText) Text(code int) (str string){
+func (et *ErrorText) Text(code int) (str string) {
 	var ok bool
 	switch et.Language {
 	case "zh_CN":
@@ -37,4 +38,3 @@ func(et *ErrorText) Text(code int) (str string){
 	}
 	return
 }
-

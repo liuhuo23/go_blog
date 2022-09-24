@@ -2,7 +2,7 @@ package autoload
 
 type DivisionTime struct {
 	MaxAge       int `ini:"max_age" yaml:"max_age"`             // 保留文件的最大天数，单位天
-	RotationTime int `ini:"rotation_time" ymal:"rotation_time"` //多长时间切割一次文件，单位小时
+	RotationTime int `ini:"rotation_time" yaml:"rotation_time"` //多长时间切割一次文件，单位小时
 
 }
 
