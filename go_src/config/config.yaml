@@ -13,7 +13,7 @@ mysql:
   port: 3306
   database: go_blog
   username: root
-  password: zhao2370
+  password: 3nzeMG2u62i23DZaWTfaTA==
   charset: utf8mb4
   table_prefix: ""
   max_idle_conns: 10
