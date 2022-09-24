@@ -24,7 +24,6 @@ func init() {
 	if printVersion {
 		println(version)
 	}
-
 	//1. 初始化配置
 	config.InitConfig(configPath)
 	// 2.初始化zap日志
