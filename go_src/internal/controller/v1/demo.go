@@ -16,6 +16,7 @@ func NewDemoController() *DemoController {
 
 // HelloWorld hello world
 func (api *DemoController) HelloWorld(c *gin.Context) {
+	//获取参数
 	str, ok := c.GetQuery("name")
 	if !ok {
 		str = "失败"

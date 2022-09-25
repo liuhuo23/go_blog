@@ -11,4 +11,5 @@ var enUSText = map[int]string{
 	AuthorizationError: "Authorization error",
 	RBACError:          "No access",
 	UserISExist:        "User is Exits",
+	BLOGIDNOTFOUND:     "Blog id not found",
 }

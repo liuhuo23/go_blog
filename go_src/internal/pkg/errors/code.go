@@ -11,6 +11,7 @@ const (
 	AuthorizationError = 10103
 	RBACError          = 10104
 	UserISExist        = 10105
+	BLOGIDNOTFOUND     = 10106
 )
 
 type ErrorText struct {

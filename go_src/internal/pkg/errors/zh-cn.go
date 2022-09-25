@@ -11,4 +11,5 @@ var zhCNText = map[int]string{
 	AuthorizationError: "权限错误",
 	RBACError:          "暂无访问权限",
 	UserISExist:        "用户已经存在",
+	BLOGIDNOTFOUND:     "该博客不存在",
 }
