@@ -44,9 +44,9 @@ func (blog *BlogController) InsertOne(c *gin.Context) {
 	if berr := validator.CheckPostParams(c, &blogForm); berr != nil {
 		return
 	}
-	result, berr := service.NewBlogServer().CreateBlog(blogForm.Title, []byte(blogForm.Content), blogForm.Author, blogForm.Visits)
+	id, berr := service.NewBlogServer().CreateBlog(blogForm.Title, []byte(blogForm.Content), blogForm.Author, blogForm.Visits)
 	if berr != nil {
 		blog.Err(c, berr)
 	}
-	blog.Success(c, result)
+	blog.Success(c, id)
 }

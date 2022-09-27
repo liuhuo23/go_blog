@@ -23,15 +23,17 @@ func (b *BlogServer) QueryById(id uint) (*model.Blog, error) {
 	return data, nil
 }
 
-func (b *BlogServer) CreateBlog(title string, content []byte, author uint, visits uint16) (bool, error) {
+func (b *BlogServer) CreateBlog(title string, content []byte, author uint, visits uint16) (uint, error) {
 	blog, berr := model.NewBlog()
 	if berr != nil {
 		log.Logger.Sugar().Error("创建blog失败，err：", berr.Error())
-		return false, berr
+		return 0, berr
 	}
 	err := blog.InsertOne(title, content, author, visits)
 	if err != nil {
-		return false, err
+		return 0, err
 	}
-	return true, nil
+	var id []uint
+	blog.DB().Raw("select LAST_INSERT_ID() as id").Pluck("id", &id)
+	return id[0], nil
 }

@@ -1,6 +1,10 @@
 package model
 
-import myerr "go_blog/internal/pkg/errors"
+import (
+	myerr "go_blog/internal/pkg/errors"
+	"go_blog/internal/pkg/utils"
+	"time"
+)
 
 type Blog struct {
 	BaseModel
@@ -37,10 +41,11 @@ func (b *Blog) InsertOne(title string, content []byte, author uint, visits uint1
 	b.Author = author
 	b.Visits = visits
 	b.Content = string(content)
+	b.CreateAt = utils.FormatDate{time.Now()}
 	author_id, _ := NewAdminUsers()
 	auth := author_id.GetUserById(author)
 	if auth != nil {
-		b.ID = auth.ID
+		b.Author = auth.ID
 	} else {
 		return myerr.NewBusinessError(myerr.UserDoesNotExist)
 	}
