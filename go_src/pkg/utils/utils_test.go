@@ -15,7 +15,8 @@ func TestGetRunPath(t *testing.T) {
 }
 
 func TestGetCurrentPath(t *testing.T) {
-	_, err := GetCurrentPath()
+	path, err := GetCurrentPath()
+	print(path)
 	if err != nil {
 		t.Error("获取运行路径失败")
 	}

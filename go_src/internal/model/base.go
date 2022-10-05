@@ -1,7 +1,6 @@
 package model
 
 import (
-	"fmt"
 	uuid "github.com/satori/go.uuid"
 	"go_blog/data"
 	"go_blog/internal/pkg/utils"
@@ -18,7 +17,6 @@ type BaseModel struct {
 
 func (base *BaseModel) BeforeCreate(tx *gorm.DB) error {
 	base.ID = uuid.NewV4()
-	fmt.Println(uuid.NewV4())
 	base.CreateAt = utils.FormatDate{Time: time.Now()}
 	return nil
 }

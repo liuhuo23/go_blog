@@ -24,7 +24,7 @@ func NewBlogController() *BlogController {
 
 func (blog *BlogController) QueryBlog(c *gin.Context) {
 	idStr := c.Param("id")
-	id, berr := strconv.ParseUint(idStr, 10, 32)
+	id, berr := strconv.ParseUint(idStr, 10, 64)
 	if berr != nil {
 		blog.Err(c, berr)
 		return
@@ -35,7 +35,6 @@ func (blog *BlogController) QueryBlog(c *gin.Context) {
 		blog.Err(c, berr)
 		return
 	}
-	// 调用服务
 	blog.Success(c, data)
 }
 

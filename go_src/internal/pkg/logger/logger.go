@@ -24,13 +24,13 @@ func InitLogger() {
 // initZapLog 初始化日志
 func createZapLog() *zap.Logger {
 	// 开启Debug
-	if config.Config.AppConfig.Debug == true {
+	if config.Config.AppConfig.Debug != true {
 		if Logger, err := zap.NewDevelopment(); err == nil {
+			Logger.Sugar().Info("初始化成功")
 			return Logger
 		} else {
 			panic("创建zap日志包失败，详情： " + err.Error())
 		}
-
 	}
 	encoderConfig := zap.NewProductionEncoderConfig()
 	encoderConfig.EncodeTime = func(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
@@ -40,6 +40,7 @@ func createZapLog() *zap.Logger {
 	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
 	encoder := zapcore.NewConsoleEncoder(encoderConfig)
 	filename := filepath.Join(config.Config.AppConfig.StaticBasePath, "/logs/", config.Config.Logger.Filename)
+	println("filename:", filename)
 	var writer zapcore.WriteSyncer
 	if config.Config.Logger.DefaultDivision == "size" {
 		// 按文件大小切割日志
