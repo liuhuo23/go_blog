@@ -17,7 +17,7 @@
           <el-menu-item index="/bbs">论坛</el-menu-item>
         </el-menu>
       </el-col>
-      <el-col :span="9" align="middle" class="search">
+      <el-col :span="9" align="middle" class="w-full">
         <el-select
             v-model="value"
             placeholder="选择"
@@ -25,20 +25,25 @@
             :reserve-keyword="true"
             :remote-show-suffix="false"
             :remote-method="search"
-            class="my-select"
+            class="w-10/12"
         >
           <el-option
               v-for="item in options"
               :key="item.value"
               :label="item.label"
+              class="rounded-bl-full rounded-tl-full"
+              popper-class="rounded-bl-full rounded-tl-full"
               :value="item.value">
 
           </el-option>
         </el-select>
-        <el-button class="mybutton">搜索</el-button>
+        <el-button class="w-2/12 rounded-br-full rounded-tr-full bg-red-500 ml-0">搜索</el-button>
       </el-col>
-      <el-col :span="7" align="middle">
-        hello
+      <el-col :span="7"  class="text-right align-middle pb-2" >
+
+        <el-avatar
+            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        />
       </el-col>
     </el-row>
   </div>
@@ -57,42 +62,7 @@ const search = () => {
 </script>
 
 <style scoped>
-.el-col {
-  border-radius: 4px;
-}
-.el-select{
-  width: 80%;
-  height: 80%;
-  border-right: 0;
-}
-.my-select{
-  margin-right: 0;
-  border-right: 0 solid #888888;
-  border-top-left-radius: 16px;
-  border-bottom-left-radius: 16px;
-  vertical-align: middle;
-  display: inline-block;
-  height: 35px;
-}
-.mybutton {
-  margin-left: 0;
-  margin-top: -3px;
-  border-left: 0 solid #888888;
-  background-color: #e86363;
-  width: 88px;
-  border-top-right-radius: 16px;
-  border-bottom-right-radius: 16px;
-  display: inline-block;
-  padding-top: 0;
-  padding-bottom: 0;
-  border-top: 0;
-  border-bottom: 0;
-  height: 32px;
-}
-.search{
-  vertical-align: middle;
-  display: inline-block;
-}
+
 .menu{
   height: 39px;
   border-bottom: 0;

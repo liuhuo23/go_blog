@@ -1,17 +1,14 @@
 package model
 
-import (
-	myerr "go_blog/internal/pkg/errors"
-	"go_blog/internal/pkg/utils"
-	"time"
-)
+import uuid "github.com/satori/go.uuid"
 
 type Blog struct {
 	BaseModel
-	Title   string `gorm:"column:title;type:varchar(128);not null;default:'无标题'" json:"title"`
-	Content string `gorm:"column:content;type:mediumtext;not null;" json:"content"`
-	Author  uint   `gorm:"column:author;type:int;not null;default:0" json:"author"`
-	Visits  uint16 `gorm:"column:visits;type:int unsigned;not null;default:0" json:"visits"`
+	Title      string     `gorm:"column:title;type:varchar(128);not null;default:'无标题'" json:"title"`
+	Content    string     `gorm:"column:content;type:mediumtext;not null;" json:"content"`
+	Author     uuid.UUID  `gorm:"column:author;type:varchar(50)" json:"author"`
+	Visits     uint16     `gorm:"column:visits;type:int unsigned;not null;default:0" json:"visits"`
+	AdminUsers AdminUsers `gorm:"ForeignKey:ID;AssociationForeignKey:Author"`
 }
 
 func NewBlog() (*Blog, error) {
@@ -36,19 +33,11 @@ func (u *Blog) CreateTable() error {
 	return nil
 }
 
-func (b *Blog) InsertOne(title string, content []byte, author uint, visits uint16) error {
+func (b *Blog) InsertOne(title string, content []byte, author string, visits uint16) error {
 	b.Title = title
-	b.Author = author
 	b.Visits = visits
 	b.Content = string(content)
-	b.CreateAt = utils.FormatDate{time.Now()}
-	author_id, _ := NewAdminUsers()
-	auth := author_id.GetUserById(author)
-	if auth != nil {
-		b.Author = auth.ID
-	} else {
-		return myerr.NewBusinessError(myerr.UserDoesNotExist)
-	}
+	b.Author, _ = uuid.FromString(author)
 	result := b.DB().Create(b)
 	return result.Error
 }

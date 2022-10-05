@@ -47,6 +47,7 @@ func (blog *BlogController) InsertOne(c *gin.Context) {
 	id, berr := service.NewBlogServer().CreateBlog(blogForm.Title, []byte(blogForm.Content), blogForm.Author, blogForm.Visits)
 	if berr != nil {
 		blog.Err(c, berr)
+		return
 	}
 	blog.Success(c, id)
 }

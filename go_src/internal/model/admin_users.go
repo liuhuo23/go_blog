@@ -1,6 +1,7 @@
 package model
 
 import (
+	log "go_blog/internal/pkg/logger"
 	"go_blog/internal/pkg/utils"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/plugin/soft_delete"
@@ -45,6 +46,7 @@ func (u *AdminUsers) GetUserById(id uint) *AdminUsers {
 func (u *AdminUsers) Register() error {
 	u.Password, _ = u.PasswordHash(u.Password)
 	result := u.DB().Create(u)
+	log.Logger.Sugar().Info(result)
 	return result.Error
 }
 

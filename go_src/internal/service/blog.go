@@ -1,6 +1,7 @@
 package service
 
 import (
+	uuid "github.com/satori/go.uuid"
 	"go_blog/internal/model"
 	log "go_blog/internal/pkg/logger"
 )
@@ -23,17 +24,19 @@ func (b *BlogServer) QueryById(id uint) (*model.Blog, error) {
 	return data, nil
 }
 
-func (b *BlogServer) CreateBlog(title string, content []byte, author uint, visits uint16) (uint, error) {
+func (b *BlogServer) CreateBlog(title string, content []byte, author string, visits uint16) (uuid.UUID, error) {
 	blog, berr := model.NewBlog()
 	if berr != nil {
 		log.Logger.Sugar().Error("创建blog失败，err：", berr.Error())
-		return 0, berr
+		return uuid.Nil, berr
 	}
 	err := blog.InsertOne(title, content, author, visits)
 	if err != nil {
-		return 0, err
+		log.Logger.Sugar().Error("插入数据失败！err:", err)
+		return uuid.Nil, err
 	}
-	var id []uint
+	var id []uuid.UUID
 	blog.DB().Raw("select LAST_INSERT_ID() as id").Pluck("id", &id)
+	log.Logger.Sugar().Info(id)
 	return id[0], nil
 }

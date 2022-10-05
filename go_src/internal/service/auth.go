@@ -38,13 +38,14 @@ func (auth *AuthService) Login(username, password string) (*Data, error) {
 	}
 	return &data, nil
 }
-func (auth *AuthService) Register(username, password string) error {
+func (auth *AuthService) Register(username, password, mobile string) error {
 	adminUsers, berr := model.NewAdminUsers()
 	if berr != nil {
 		log.Logger.Sugar().Info(berr.Error())
 	}
 	adminUsers.Password = password
 	adminUsers.Username = username
+	adminUsers.Mobile = mobile
 	berr = adminUsers.Register()
 	if berr != nil {
 		berr := err.NewBusinessError(err.UserISExist)

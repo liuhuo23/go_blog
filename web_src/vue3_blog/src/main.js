@@ -8,6 +8,7 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import 'element-plus/dist/index.css'
 import store from './store'
 import 'bootstrap/dist/css/bootstrap.css'
+import './index.css'
 createApp(App)
     .provide('$axios', axios)
     .use(router)

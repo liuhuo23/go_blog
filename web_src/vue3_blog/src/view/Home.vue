@@ -1,9 +1,5 @@
 <template>
 <div>
-  hello
-  {{count}}
-  {{Mydata.message}}
-  <el-button @click="getinfo()">点击</el-button>
 </div>
 </template>
 

@@ -42,7 +42,7 @@ func (api *AuthController) NewRegister(c *gin.Context) {
 	if err := validator.CheckPostParams(c, &loginForm); err != nil {
 		return
 	}
-	err := service.NewAuthService().Register(loginForm.UserName, loginForm.Password)
+	err := service.NewAuthService().Register(loginForm.UserName, loginForm.Password, loginForm.Mobile)
 	if err != nil {
 		api.Err(c, err)
 		return
