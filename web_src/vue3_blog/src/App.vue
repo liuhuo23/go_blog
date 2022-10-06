@@ -1,6 +1,6 @@
 <template>
-  <el-container>
-    <el-header class="header" height="50px">
+  <el-container class="h-screen">
+    <el-header class="header" height="40px">
       <Nav />
     </el-header>
     <el-main>
@@ -29,5 +29,6 @@ import HelloWorld from './components/HelloWorld.vue'
 }
 .header{
   border-bottom: 1px solid #888888;
+  padding-bottom: 0;
 }
 </style>

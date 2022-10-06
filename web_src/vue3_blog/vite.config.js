@@ -4,9 +4,12 @@ import requireMs from "@vitejs/plugin-vue";
 import * as path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
-  alias: {
-    // 键必须以斜线开始斜线结束
-    '/@/': path.resolve(__dirname, './src')
+  base: './',
+  resolve: {
+    // 配置路径别名
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
   },
   server:{
     hostname: 'localhost',
