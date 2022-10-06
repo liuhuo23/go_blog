@@ -12,4 +12,6 @@ var zhCNText = map[int]string{
 	RBACError:          "暂无访问权限",
 	UserISExist:        "用户已经存在",
 	BLOGIDNOTFOUND:     "该博客不存在",
+	NOTOKEN:            "没有token值，你没有权限访问此路径",
+	TOKENERROR:         "错误的token值",
 }

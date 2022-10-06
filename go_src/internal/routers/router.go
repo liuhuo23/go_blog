@@ -36,7 +36,6 @@ func SetRouters() *gin.Engine {
 	SetApiRouter(r)
 	// 设置blog 路由
 	SetBlogRouter(r)
-
 	r.NoRoute(func(c *gin.Context) {
 		response2.Resp().SetHttpCode(http.StatusNotFound).FailCode(c, errors.NotFound)
 	})

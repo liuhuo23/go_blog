@@ -1,6 +1,9 @@
 package routers
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"go_blog/internal/middleware"
+)
 import controllerBlog "go_blog/internal/controller/blog"
 
 func SetBlogRouter(r *gin.Engine) {
@@ -8,6 +11,6 @@ func SetBlogRouter(r *gin.Engine) {
 	{
 		blog := controllerBlog.NewBlogController()
 		v1.GET("/query/:id", blog.QueryBlog)
-		v1.POST("/upload", blog.InsertOne)
+		v1.POST("/upload", middleware.JWTAuth(), blog.InsertOne)
 	}
 }

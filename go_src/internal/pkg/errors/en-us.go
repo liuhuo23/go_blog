@@ -12,4 +12,6 @@ var enUSText = map[int]string{
 	RBACError:          "No access",
 	UserISExist:        "User is Exits",
 	BLOGIDNOTFOUND:     "Blog id not found",
+	NOTOKEN:            "No token. you don't have permission!",
+	TOKENERROR:         "Token error",
 }

@@ -24,7 +24,7 @@ func InitLogger() {
 // initZapLog 初始化日志
 func createZapLog() *zap.Logger {
 	// 开启Debug
-	if config.Config.AppConfig.Debug != true {
+	if config.Config.AppConfig.Debug == true {
 		if Logger, err := zap.NewDevelopment(); err == nil {
 			Logger.Sugar().Info("初始化成功")
 			return Logger

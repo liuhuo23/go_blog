@@ -1,9 +1,11 @@
 package service
 
 import (
+	"go_blog/config/autoload"
 	"go_blog/internal/model"
 	err "go_blog/internal/pkg/errors"
 	log "go_blog/internal/pkg/logger"
+	"time"
 )
 
 type AuthService struct {
@@ -30,11 +32,16 @@ func (auth *AuthService) Login(username, password string) (*Data, error) {
 	if !adminUsersModel.ComparePasswords(password) {
 		return nil, err.NewBusinessError(err.FAILURE, "用户密码错误")
 	}
-
-	/* TODO 生成 token 等业务逻辑，此处不再演示，直接返回用户信息 */
-	// ...
+	// 设置过期时间为 1分钟
+	var expireTime = time.Now().Add(5 * time.Minute)
+	log.Logger.Sugar().Info(time.Now(), expireTime)
+	token, tokenErr := autoload.GenerateToken(user.ID, expireTime)
+	if tokenErr != nil {
+		berr := err.NewBusinessError(err.AuthorizationError)
+		return nil, berr
+	}
 	data := Data{
-		Token: "hello",
+		Token: token,
 	}
 	return &data, nil
 }

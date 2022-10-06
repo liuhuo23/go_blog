@@ -16,7 +16,7 @@ func NewAuthController() *AuthController {
 	return &AuthController{}
 }
 
-// login 一个炮筒去全流程的示例， 业务代码未补充完整
+// Login 一个炮筒去全流程的示例， 业务代码未补充完整
 func (api *AuthController) Login(c *gin.Context) {
 	// 初始化参数结构体
 	loginForm := form.LoginForm()
@@ -25,24 +25,23 @@ func (api *AuthController) Login(c *gin.Context) {
 	if err := validator.CheckPostParams(c, &loginForm); err != nil {
 		return
 	}
-
 	result, err := service.NewAuthService().Login(loginForm.UserName, loginForm.Password)
-
 	//根据业务返回值判断业务成功 OR 失败
 	if err != nil {
 		api.Err(c, err)
 		return
 	}
+	c.SetCookie("Authorization", result.Token, 60*5, "/", "127.0.0.1", false, true)
 	api.Success(c, result)
 }
 
 func (api *AuthController) NewRegister(c *gin.Context) {
-	loginForm := form.LoginForm()
+	registerForm := form.RegisterForm()
 
-	if err := validator.CheckPostParams(c, &loginForm); err != nil {
+	if err := validator.CheckPostParams(c, &registerForm); err != nil {
 		return
 	}
-	err := service.NewAuthService().Register(loginForm.UserName, loginForm.Password, loginForm.Mobile)
+	err := service.NewAuthService().Register(registerForm.UserName, registerForm.Password, registerForm.Mobile)
 	if err != nil {
 		api.Err(c, err)
 		return
