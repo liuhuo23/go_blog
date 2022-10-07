@@ -12,5 +12,6 @@ func SetBlogRouter(r *gin.Engine) {
 		blog := controllerBlog.NewBlogController()
 		v1.GET("/query/:id", blog.QueryBlog)
 		v1.POST("/upload", middleware.JWTAuth(), blog.InsertOne)
+		v1.GET("/list", blog.GetList)
 	}
 }

@@ -4,7 +4,7 @@ import "github.com/gin-gonic/gin"
 import controllerV1 "go_blog/internal/controller/v1"
 
 func SetApiRouter(r *gin.Engine) {
-	v1 := r.Group("/api/v1")
+	v1 := r.Group("")
 	{
 		auth := controllerV1.NewAuthController()
 		v1.POST("/login", auth.Login)

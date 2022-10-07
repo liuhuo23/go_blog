@@ -80,3 +80,10 @@ func (b *Blog) InsertOne(title string, content []byte, author string, visits uin
 	result := b.DB().Create(b)
 	return result.Error
 }
+
+// GetList 获取所有数据
+func (b *Blog) GetList(page int, limit int) []Blog {
+	var blogs []Blog
+	b.DB().Offset((page - 1) * limit).Limit(limit).Find(&blogs)
+	return blogs
+}

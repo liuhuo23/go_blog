@@ -40,3 +40,9 @@ func (b *BlogServer) CreateBlog(title string, content []byte, author string, vis
 	log.Logger.Sugar().Info(id)
 	return id[0], nil
 }
+
+func (b *BlogServer) GetList(page int, limit int) []model.Blog {
+	blog, _ := model.NewBlog()
+	data := blog.GetList(page, limit)
+	return data
+}

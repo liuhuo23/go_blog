@@ -50,3 +50,12 @@ func (blog *BlogController) InsertOne(c *gin.Context) {
 	}
 	blog.Success(c, id)
 }
+
+func (blog *BlogController) GetList(c *gin.Context) {
+	Page := validator.Page{}
+	if berr := validator.CheckQueryParams(c, &Page); berr != nil {
+		return
+	}
+	data := service.NewBlogServer().GetList(int(Page.Page), int(Page.Limit))
+	blog.Success(c, data)
+}

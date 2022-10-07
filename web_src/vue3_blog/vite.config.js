@@ -7,7 +7,7 @@ import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import * as path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './',
+  base: '/',
   resolve: {
     // 配置路径别名
     alias: {
