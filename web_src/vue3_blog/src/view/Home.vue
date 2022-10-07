@@ -1,10 +1,19 @@
-<template>
-<div>
+<template xmlns="">
+<div class="container mx-auto flex">
+  <n-list
+      hoverable clickable
+    class="min-w-3/4"
+  >
+    <n-list-item v-for="i in 10">
+      <Blog :title="'博客'+i" description="这是一个很好的博客" />
+    </n-list-item>
+  </n-list>
 </div>
 </template>
 
 <script setup>
 import {computed, inject, ref} from "vue";
+import '@/components/Blog.vue'
 import { useStore } from 'vuex'
 import {apiGetuserInfo} from "../apis/user.js";
 const $axios = inject('$axios')

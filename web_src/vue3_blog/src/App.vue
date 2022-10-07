@@ -1,12 +1,14 @@
 <template>
-  <el-container class="h-screen">
-    <el-header class="header" height="40px">
-      <Nav />
-    </el-header>
-    <el-main>
-      <router-view />
-    </el-main>
-  </el-container>
+  <n-message-provider>
+    <el-container class="h-screen">
+      <el-header class="header" height="60px">
+        <Nav />
+      </el-header>
+      <el-main>
+        <router-view />
+      </el-main>
+    </el-container>
+  </n-message-provider>
 </template>
 <script setup>
 import Nav from './components/Nav.vue'
